@@ -1,2 +1,2 @@
-# wordsmith-
+# wordsmith
 wordsmith 

@@ -1,16 +1,29 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <nav class="appbar">
-    <router-link to="/">主页</router-link>
-    <router-link to="/config">配置</router-link>
-  </nav>
-  <router-view/>
+  <div class="flex flex-col h-screen">
+    <!-- Appbar -->
+    <nav class="appbar flex items-center justify-center p-4 bg-blue-500 text-white">
+      <RouterLink to="/" class="mx-2">主页</RouterLink>
+      <RouterLink to="/config" class="mx-2">配置</RouterLink>
+    </nav>
+
+    <!-- Content area -->
+    <main class="flex-grow p-8">
+      <div class="max-w-4xl mx-auto">
+        <RouterView/>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="p-4 bg-gray-200 text-center">
+      © 2024
+    </footer>
+  </div>
 </template>
 
-<style scoped>
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+</script>
 
+<style scoped>
+/* TailwindCSS/DaisyUI样式 */
 </style>

@@ -1,12 +1,15 @@
 <template>
 	<div class="flex flex-col h-screen justify-between">
 		<!-- Content -->
-		<main class="flex-grow container mx-auto p-4">
+		<main class="flex-grow">
 			<header class="title text-3xl text-center my-6">WordSmith</header>
 			<section class="sentence text-center my-6">
-				<span class="variable mx-1 bg-blue-100 text-blue-800 py-2 px-4 rounded">{{ randomWho }}</span>
-				<span class="variable mx-1 bg-blue-100 text-blue-800 py-2 px-4 rounded">{{ randomWhere }}</span>
-				<span class="variable mx-1 bg-blue-100 text-blue-800 py-2 px-4 rounded">{{ randomAction }}</span>
+				<!-- 使用Flexbox在移动端竖直排列 -->
+				<div class="flex flex-col md:flex-row">
+					<span class="variable mx-1 bg-blue-100 text-blue-800 py-2 px-4 rounded">{{ randomWho }}</span>
+					<span class="variable mx-1 bg-blue-100 text-blue-800 py-2 px-4 rounded">{{ randomWhere }}</span>
+					<span class="variable mx-1 bg-blue-100 text-blue-800 py-2 px-4 rounded">{{ randomAction }}</span>
+				</div>
 			</section>
 			<div class="text-center">
 				<button @click="generateSentence"
@@ -15,22 +18,19 @@
 				</button>
 			</div>
 			<!-- History Card -->
-			<section class="history my-6 mx-auto p-4 max-w-xl bg-base-300 rounded-lg shadow-md">
+			<section class="history my-6 mx-auto p-4 max-w-full bg-base-300 rounded-lg shadow-md">
+				<!-- 在移动端隐藏时间戳和new标签 -->
 				<ul class="list-none text-center text-lg">
-					<!-- History Card List Item -->
-					<li v-for="(item, index) in history.slice(0, 20)" :key="index"
-						class="flex items-center justify-center my-2">
-						<!-- Space for the NEW tag or placeholder for alignment -->
-						<span :class="{'new-tag': index === 0, 'tag-space': true}">
+					<li v-for="(item, index) in history.slice(0, 10)" :key="index"
+						class="flex items-center justify-center my-2 text-base">
+						<span v-if="!isMobile" :class="{'new-tag': index === 0, 'tag-space': true}">
 							<span v-if="index === 0" class="text-s mr-2">
 								NEW
 							</span>
 						</span>
-						<!-- Timestamp and sentence container -->
 						<div
 							:class="{'bg-neutral': index === 0, 'flex-grow': true, 'rounded-md': index === 0, 'py-2': index === 0, 'px-4': index === 0}">
-							<!-- Timestamp tag -->
-							<span
+							<span v-if="!isMobile"
 								class="timestamp-tag bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-xs font-semibold mr-2">
 								{{ item.timestamp }}
 							</span>
@@ -65,6 +65,7 @@
 			};
 		},
 		setup() {
+			const isMobile = ref(window.innerWidth <= 768);
 			// 创建响应式引用来存储数据
 			const whos = ref([]);
 			const wheres = ref([]);
@@ -122,6 +123,7 @@
 				wheres,
 				actions,
 				theme,
+				isMobile,
 				// ... 其他需要返回的响应式数据 ...
 			};
 		},
@@ -164,7 +166,26 @@
 </script>
 <style scoped>
 	/* TailwindCSS/DaisyUI样式 */
+	@media (max-width: 768px) {
 
+		.timestamp-tag,
+		.new-tag {
+			display: none;
+		}
+	}
+	
+	  @media (max-width: 768px) {
+	.variable {
+	      margin: 10px;
+		  min-height: 40px;
+	    }
+	  }
+	  @media (max-width: 768px) {
+	  .history  {
+		  font-size:15px; 
+padding: 0px;
+	      }
+	    }
 	/* NEW tag visible styling */
 	.new-tag {
 		display: inline-block;
@@ -208,5 +229,10 @@
 		flex-grow: 1;
 		text-align: left;
 		padding-left: 16px;
+	}
+
+	button {
+		font-weight: normal;
+		/* 移除加粗 */
 	}
 </style>

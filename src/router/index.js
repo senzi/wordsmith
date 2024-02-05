@@ -13,6 +13,11 @@ const router = createRouter({
       path: '/config',
       name: 'Config',
       component: () => import('../components/ConfigPage.vue')
+    },
+    {
+      path: '/presets',
+      name: 'Presets',
+      component: () => import('../components/Presets.vue')
     }
   ]
 })

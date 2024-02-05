@@ -4,6 +4,7 @@
     <nav class="appbar flex items-center justify-center p-4 bg-blue-500 text-white">
       <RouterLink to="/" class="mx-2">主页</RouterLink>
       <RouterLink to="/config" class="mx-2">配置</RouterLink>
+	  <RouterLink to="/presets" class="mx-2">预设</RouterLink>
     </nav>
 
     <!-- Content area -->

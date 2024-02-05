@@ -236,6 +236,10 @@
 				this.showImport = false;
 				this.showExport = true;
 			},
+			toggleImport() {
+				this.showImport = true;
+				this.showExport = false;
+			},
 			addWho() {
 				this.whos.push('');
 			},

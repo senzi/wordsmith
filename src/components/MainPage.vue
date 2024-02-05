@@ -15,20 +15,20 @@
 				</button>
 			</div>
 			<!-- History Card -->
-			<section class="history my-6 mx-auto p-4 max-w-xl bg-white rounded-lg shadow-md">
+			<section class="history my-6 mx-auto p-4 max-w-xl bg-base-300 rounded-lg shadow-md">
 				<ul class="list-none text-center text-lg">
 					<!-- History Card List Item -->
-					<li v-for="(item, index) in history.slice(0, 10)" :key="index"
+					<li v-for="(item, index) in history.slice(0, 20)" :key="index"
 						class="flex items-center justify-center my-2">
 						<!-- Space for the NEW tag or placeholder for alignment -->
 						<span :class="{'new-tag': index === 0, 'tag-space': true}">
-							<span v-if="index === 0" class="text-xs font-semibold mr-2">
+							<span v-if="index === 0" class="text-s mr-2">
 								NEW
 							</span>
 						</span>
 						<!-- Timestamp and sentence container -->
 						<div
-							:class="{'bg-blue-100': index === 0, 'flex-grow': true, 'rounded-md': index === 0, 'py-2': index === 0, 'px-4': index === 0}">
+							:class="{'bg-neutral': index === 0, 'flex-grow': true, 'rounded-md': index === 0, 'py-2': index === 0, 'px-4': index === 0}">
 							<!-- Timestamp tag -->
 							<span
 								class="timestamp-tag bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-xs font-semibold mr-2">
@@ -127,7 +127,14 @@
 		},
 		methods: {
 			generateSentence() {
-				// 随机抽取 who, where, action 并生成新句子
+				// 检查数组是否包含有效数据
+				const hasValidData = this.whos.length > 0 && this.wheres.length > 0 && this.actions.length > 0;
+				if (!hasValidData) {
+					alert('信息不足，请到配置页面添加或到预设页面套用默认预设');
+					return; // 如果数据不足，不执行生成句子的操作
+				}
+
+				// 如果数据充足，继续生成句子
 				const randomWho = this.getRandomElement(this.whos);
 				const randomWhere = this.getRandomElement(this.wheres);
 				const randomAction = this.getRandomElement(this.actions);
@@ -141,7 +148,9 @@
 				this.history.unshift(newSentence); // 添加新句子到 history
 			},
 			getRandomElement(array) {
-				return array[Math.floor(Math.random() * array.length)];
+				// 过滤掉空字符串，然后随机选择一个元素
+				const nonEmptyArray = array.filter(item => item !== '');
+				return nonEmptyArray[Math.floor(Math.random() * nonEmptyArray.length)];
 			},
 			currentTimestamp() {
 				return new Date().toLocaleTimeString([], {

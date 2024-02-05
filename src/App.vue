@@ -3,9 +3,10 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-	  <h1 class="text-3xl font-bold underline">
-	    Hello world!
-	  </h1>
+  <h1 class="text-3xl font-bold underline">
+	Hello world!
+  </h1>
+  <button class="btn">Hello daisyUI</button>
   <div>
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
